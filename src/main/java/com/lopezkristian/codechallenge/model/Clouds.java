@@ -1,5 +1,8 @@
 package com.lopezkristian.codechallenge.model;
 
+import lombok.Data;
+
+@Data
 public class Clouds {
-    public int all;
+    private int all;
 }

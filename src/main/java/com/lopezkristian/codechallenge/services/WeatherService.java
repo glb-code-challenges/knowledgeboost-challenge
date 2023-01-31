@@ -4,10 +4,8 @@ import com.lopezkristian.codechallenge.model.LogWeather;
 import com.lopezkristian.codechallenge.model.OpenWeather;
 import com.lopezkristian.codechallenge.repository.LogWeatherRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -52,8 +50,8 @@ public class WeatherService implements IWeatherService {
             OpenWeather response = restTemplate.getForObject(urlRequest.toString(), OpenWeather.class);
             if (response != null) {
                 log.info(response.toString());
-                logWeather.setCityName(response.name);
-                logWeather.setCodeResponse(String.valueOf(response.cod));
+                logWeather.setCityName(response.getName());
+                logWeather.setCodeResponse(String.valueOf(response.getCod()));
 
                 saveTransaction(logWeather);
             }
@@ -84,8 +82,8 @@ public class WeatherService implements IWeatherService {
             OpenWeather response = restTemplate.getForObject(urlRequest.toString(), OpenWeather.class);
             if (response != null) {
                 log.info(response.toString());
-                logWeather.setCityName(response.name);
-                logWeather.setCodeResponse(String.valueOf(response.cod));
+                logWeather.setCityName(response.getName());
+                logWeather.setCodeResponse(String.valueOf(response.getCod()));
 
                 saveTransaction(logWeather);
             }

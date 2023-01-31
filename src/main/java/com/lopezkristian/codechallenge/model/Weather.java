@@ -1,8 +1,11 @@
 package com.lopezkristian.codechallenge.model;
 
+import lombok.Data;
+
+@Data
 public class Weather {
-    public int id;
-    public String main;
-    public String description;
-    public String icon;
+    private int id;
+    private String main;
+    private String description;
+    private String icon;
 }

@@ -22,7 +22,7 @@ public class WeatherController {
     }
 
     @GetMapping("city/")
-    public ResponseEntity<?> cityNameEmpty() {
+    public ResponseEntity<String> cityNameEmpty() {
         final String ERROR = "It is required to enter the name of a city or coordinates.";
         log.error(ERROR);
         return ResponseEntity
@@ -35,7 +35,7 @@ public class WeatherController {
      * @return response
      */
     @GetMapping("city/{cityName}")
-    public ResponseEntity<?> getCity(@PathVariable String cityName) {
+    public ResponseEntity<LogWeather> getCity(@PathVariable String cityName) {
         LogWeather logWeather = weatherService.getCity(cityName);
         return new ResponseEntity<>(logWeather, HttpStatus.OK);
     }
@@ -46,7 +46,7 @@ public class WeatherController {
      * @return response
      */
     @GetMapping("latitude/{latitude}/longitude/{longitude}")
-    public ResponseEntity<?> getWeatherLatitudeLongitude(@PathVariable String latitude, @PathVariable String longitude) {
+    public ResponseEntity<LogWeather> getWeatherLatitudeLongitude(@PathVariable String latitude, @PathVariable String longitude) {
         LogWeather logWeather = weatherService.getWeatherLatitudeLongitude(latitude, longitude);
         return new ResponseEntity<>(logWeather, HttpStatus.OK);
     }

@@ -1,6 +1,9 @@
 package com.lopezkristian.codechallenge.model;
 
+import lombok.Data;
+
+@Data
 public class Coord {
-    public double lon;
-    public double lat;
+    private double lon;
+    private double lat;
 }
