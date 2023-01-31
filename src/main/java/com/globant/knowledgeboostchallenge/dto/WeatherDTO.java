@@ -1,10 +1,6 @@
 package com.globant.knowledgeboostchallenge.dto;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 public class WeatherDTO {

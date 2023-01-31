@@ -2,7 +2,6 @@ package com.globant.knowledgeboostchallenge.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.globant.knowledgeboostchallenge.dto.WeatherDTO;
 import com.globant.knowledgeboostchallenge.entity.Weather;

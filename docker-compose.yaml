@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    image: knowledgeboost
+    ports:
+      - 8080:8080
