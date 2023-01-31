@@ -1,15 +1,15 @@
-package com.globant.openweatherservice.dto;
+package com.globant.openweatherservice.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-public class WeatherResponseDto {
-    private String description;
-
+public class Coordinates {
+    String lon;
+    String lat;
 }

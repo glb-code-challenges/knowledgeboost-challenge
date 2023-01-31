@@ -1,6 +1,6 @@
 package com.globant.openweatherservice.service;
 
-import com.globant.openweatherservice.dto.WeatherResponseDto;
+import com.globant.openweatherservice.dto.response.WeatherResponseDto;
 
 public interface WeatherService {
     /**

@@ -1,5 +1,7 @@
 package com.globant.openweatherservice.utils;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class Constants {
     public enum ResponseConstant{
         SUCCESS("Success"),
