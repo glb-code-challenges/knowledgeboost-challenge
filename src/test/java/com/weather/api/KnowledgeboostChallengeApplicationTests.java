@@ -9,7 +9,7 @@ class KnowledgeboostChallengeApplicationTests {
 
 	@Test
 	void contextLoads() {
-		System.out.println("Here we go!")
+		System.out.println("Here we go!");
 	}
 
 }
