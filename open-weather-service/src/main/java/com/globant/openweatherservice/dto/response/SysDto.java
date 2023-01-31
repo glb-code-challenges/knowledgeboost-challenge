@@ -9,7 +9,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Coordinates {
-    String lon;
-    String lat;
+public class SysDto {
+    private Integer type;
+    private Long id;
+    private String country;
+    private Long sunrise;
+    private Long sunset;
 }
