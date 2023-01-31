@@ -1,7 +1,7 @@
 package com.lopezkristian.codechallenge.controller;
 
 import com.lopezkristian.codechallenge.model.LogWeather;
-import com.lopezkristian.codechallenge.services.WeatherService;
+import com.lopezkristian.codechallenge.services.IWeatherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class WeatherController {
 
-    WeatherService weatherService;
+    IWeatherService weatherService;
 
-    public WeatherController(WeatherService weatherService) {
+    public WeatherController(IWeatherService weatherService) {
         this.weatherService = weatherService;
     }
 

@@ -4,7 +4,10 @@ import com.lopezkristian.codechallenge.model.LogWeather;
 import com.lopezkristian.codechallenge.model.OpenWeather;
 import com.lopezkristian.codechallenge.repository.LogWeatherRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -19,14 +22,17 @@ public class WeatherService implements IWeatherService {
 
     final LogWeatherRepository logWeatherRepository;
 
+    final RestTemplate restTemplate;
+
     @Value("${open.weather.api.key}")
     private String api;
 
     @Value("${open.weather.base.url}")
     private String baseUrl;
 
-    public WeatherService(LogWeatherRepository logWeatherRepository) {
+    public WeatherService(LogWeatherRepository logWeatherRepository, RestTemplateBuilder restTemplate) {
         this.logWeatherRepository = logWeatherRepository;
+        this.restTemplate = restTemplate.build();
     }
 
     public LogWeather getCity(String cityName) {
@@ -41,8 +47,6 @@ public class WeatherService implements IWeatherService {
 
         urlRequest.append("?q=").append(cityName)
                 .append("&appid=").append(api);
-
-        RestTemplate restTemplate = new RestTemplate();
 
         try {
             OpenWeather response = restTemplate.getForObject(urlRequest.toString(), OpenWeather.class);
@@ -76,7 +80,6 @@ public class WeatherService implements IWeatherService {
         urlRequest.append("?lat=").append(latitude)
                 .append("&lon=").append(longitude)
                 .append("&appid=").append(api);
-        RestTemplate restTemplate = new RestTemplate();
         try {
             OpenWeather response = restTemplate.getForObject(urlRequest.toString(), OpenWeather.class);
             if (response != null) {
