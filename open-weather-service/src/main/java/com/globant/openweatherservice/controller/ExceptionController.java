@@ -28,6 +28,7 @@ import static com.globant.openweatherservice.utils.Constants.VALIDATION_FAILED;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 @ControllerAdvice
+@Slf4j
 public class ExceptionController extends ResponseEntityExceptionHandler {
     @Autowired
     WeatherService weatherService;
@@ -37,6 +38,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         List<String> details = new ArrayList<>();
         details.add(exception.getLocalizedMessage());
         ErrorDto errorDto = new ErrorDto(HANDLE_ERRORS, details);
+        log.info("Solving Exception: {}", details);
         return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -45,6 +47,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         List<String> details = new ArrayList<>();
         details.add(invalidDataException.getLocalizedMessage());
         ErrorDto errorDto = new ErrorDto(INVALID_DATA, details);
+        log.info("Solving InvalidDataException: {}", details);
         return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
     }
 
@@ -56,9 +59,9 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         details.add(responseErrorDto.getMessage());
         ErrorDto errorDto = new ErrorDto(CLIENT_ERROR, details);
         weatherService.saveWeatherOperation("NA", responseErrorDto.getCod().toString(), responseErrorDto.getMessage());
+        log.info("Solving HttpClientErrorException: {}", details);
         return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
     }
-
 
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException methodArgumentNotValidException, HttpHeaders httpHeaders, HttpStatus httpStatus, WebRequest webRequest){
         List<String> details = new ArrayList<>();
@@ -66,6 +69,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
             details.add(error.getDefaultMessage());
         }
         ErrorDto errorDto = new ErrorDto(VALIDATION_FAILED, details);
+        log.info("Solving MethodArgumentNotValidException: {}", details);
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
     }
 }
