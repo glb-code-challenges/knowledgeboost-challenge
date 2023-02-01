@@ -2,18 +2,26 @@ package com.weather.api.service.impl;
 
 import com.weather.api.client.OpenWeatherApiClient;
 import com.weather.api.client.response.WeatherResponse;
+import com.weather.api.converter.GenericBuilder;
+import com.weather.api.converter.WeatherDTOToExecutionEntityConverter;
+import com.weather.api.entity.ExecutionEntity;
 import com.weather.api.exception.NotFoundException;
+import com.weather.api.repository.ExecutionsRepository;
 import com.weather.api.service.WeatherService;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class WeatherServiceImpl implements WeatherService {
     private final OpenWeatherApiClient openWeatherApiClient;
+    private final ExecutionsRepository executionsRepository;
+    private final WeatherDTOToExecutionEntityConverter weatherDTOToExecutionEntityConverter;
     private static final String APP_ID = System.getenv("APP_ID_VALUE");
     private static final String CITY_NOT_FOUND = "City was not found";
     private static final String LATITUDE_AND_LONGITUDE_NOT_FOUND = "Latitude and longitude were not found";
@@ -21,9 +29,18 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public WeatherResponse getWeatherByCityName(String cityName) {
             try {
-                return openWeatherApiClient.getWeatherByCityName(cityName, APP_ID);
-            }catch (FeignException feignException) {
+                WeatherResponse weatherResponse = openWeatherApiClient.getWeatherByCityName(cityName, APP_ID);
+                executionsRepository.save(weatherDTOToExecutionEntityConverter.convert(weatherResponse));
+                return weatherResponse;
+            } catch (FeignException feignException) {
                 log.error("{}, http-response: {}", CITY_NOT_FOUND, feignException.status());
+                executionsRepository.save(GenericBuilder.of(ExecutionEntity::new)
+                        .map(ExecutionEntity::setDatetime, LocalDateTime::now)
+                        .map(ExecutionEntity::setResponseCode, feignException::status)
+                        .map(ExecutionEntity::setRootCause, feignException::contentUTF8)
+                        .map(ExecutionEntity::setCityName, () -> cityName)
+                        .build()
+                );
                 throw new NotFoundException(CITY_NOT_FOUND, null);
             }
     }
@@ -31,9 +48,18 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public WeatherResponse getWeatherByLatitudeAndLongitude(Double latitude, Double longitude) {
         try {
-            return openWeatherApiClient.getWeatherByLatitudeAndLongitude(latitude, longitude, APP_ID);
+            WeatherResponse weatherResponse = openWeatherApiClient.getWeatherByLatitudeAndLongitude(latitude, longitude, APP_ID);
+            executionsRepository.save(weatherDTOToExecutionEntityConverter.convert(weatherResponse));
+            return weatherResponse;
         }catch (FeignException feignException) {
             log.error("{}, http-response: {}", LATITUDE_AND_LONGITUDE_NOT_FOUND, feignException.status());
+            executionsRepository.save(GenericBuilder.of(ExecutionEntity::new)
+                    .map(ExecutionEntity::setDatetime, LocalDateTime::now)
+                    .map(ExecutionEntity::setResponseCode, feignException::status)
+                    .map(ExecutionEntity::setRootCause, feignException::contentUTF8)
+                    .build()
+            );
+
             throw new NotFoundException(LATITUDE_AND_LONGITUDE_NOT_FOUND, null);
         }
     }
