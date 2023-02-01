@@ -26,6 +26,7 @@ The webservice reads on the database. The related tables are:
 | Version  | Date          | Description  |
 | ---------|---------------| ------------ |
 | 1.0.0    | 2022-01-31    | README.md added along with the initial documentation.|
+| 1.0.1    | 2022-01-31    | Added:Functionality for weatherservice/weather/city/{cityName} endpoint.|
 
 
 ### About Microservice
@@ -37,4 +38,6 @@ The webservice reads on the database. The related tables are:
 		
 		http://localhost:8080/swagger-ui/index.html#/
 		
+	Available Urls:
 	
+	http://localhost:8080/weatherservice/weather/city/{cityName}?accessToken=50b374349ec084f8dd4dbb2371d54e26

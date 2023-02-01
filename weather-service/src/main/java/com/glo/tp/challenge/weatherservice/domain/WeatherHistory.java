@@ -9,16 +9,12 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "weather_history")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class WeatherHistory {
 	
 	@Id
@@ -37,6 +33,5 @@ public class WeatherHistory {
 	
 	@Column(name = "message")
 	private String message;
-	
-	
+
 }

@@ -2,9 +2,15 @@ package com.glo.tp.challenge.weatherservice.services.impl;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.glo.tp.challenge.weatherservice.clients.WeatherClient;
+import com.glo.tp.challenge.weatherservice.domain.WeatherHistory;
+import com.glo.tp.challenge.weatherservice.dto.CityDTO;
+import com.glo.tp.challenge.weatherservice.dto.FeignResponseExceptionDTO;
 import com.glo.tp.challenge.weatherservice.repository.WeatherRepository;
 import com.glo.tp.challenge.weatherservice.services.WeatherService;
+import com.glo.tp.challenge.weatherservice.utils.WeatherUtils;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,18 +25,36 @@ public class WeatherServiceImpl implements WeatherService {
 	
 
 	@Override
-	public ResponseEntity<?> getWeatherByCityName(String cityName, String appid) {
+	public CityDTO getWeatherByCityName(String cityName, String appid) throws JsonProcessingException {
 		log.info("getWeatherByCityName {} {}", cityName, appid);
-		// TODO: After get info from API, save the data
-		return weatherClient.getWeatherByCityNameFromApi(cityName, appid);
+		
+		ResponseEntity<CityDTO> response = null;
+		
+		try {
+			response = weatherClient.getWeatherByCityNameFromApi(cityName, appid);
+			WeatherHistory mappedEntity = WeatherUtils.buildWeatherCityInformation(response);
+			saveBuiltEntity(mappedEntity);
+		}
+		catch(FeignException feignException) {
+			log.error("Feign Exception: {} ", feignException.getMessage());
+			FeignResponseExceptionDTO feignExceptionDetail = WeatherUtils.buildFeignResponseExceptionDTO(feignException);
+			WeatherHistory mappedEntity = WeatherUtils.buildWeatherCityInformation(feignExceptionDetail, cityName);			
+			saveBuiltEntity(mappedEntity);
+			WeatherUtils.verifyAndThrowException(feignExceptionDetail);				
+		}
+		
+		return response.getBody();
 	}
 
+	private void saveBuiltEntity(WeatherHistory mappedEntity) {
+		//TODO: Validate JPA for possible exceptions
+		weatherRepository.save(mappedEntity);
+	}
 
 	@Override
-	public ResponseEntity<?> getWeatherByLatitudeAndLongitude(String latitude, String longitude, String appid) {
+	public ResponseEntity<CityDTO> getWeatherByLatitudeAndLongitude(String latitude, String longitude, String appid) {
 		log.info("getWeatherByLatitudeAndLongitude {} {} {}", latitude, longitude, appid);
-		//TODO: After get info from API, save the data
+		//TODO: Validate all the endpoint flow like the other one.
 		return weatherClient.getWeatherByLatitudeAndLongitude(latitude, longitude, appid);
 	}
-
 }

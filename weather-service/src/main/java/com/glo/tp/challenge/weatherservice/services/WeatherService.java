@@ -1,10 +1,11 @@
 package com.glo.tp.challenge.weatherservice.services;
 
 import org.springframework.http.ResponseEntity;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.glo.tp.challenge.weatherservice.dto.CityDTO;
 
 public interface WeatherService {
 	
-	public ResponseEntity<?> getWeatherByCityName(String cityName, String appid);
-	public ResponseEntity<?> getWeatherByLatitudeAndLongitude(String latitude, String longitude, String appid);
-
+	public CityDTO getWeatherByCityName(String cityName, String appid) throws JsonProcessingException;
+	public ResponseEntity<CityDTO> getWeatherByLatitudeAndLongitude(String latitude, String longitude, String appid);
 }

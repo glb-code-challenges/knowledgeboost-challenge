@@ -1,6 +1,11 @@
 package com.glo.tp.challenge.weatherservice.controller;
 
-import com.glo.tp.challenge.weatherservice.services.WeatherService;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.glo.tp.challenge.weatherservice.dto.CityDTO;
+import com.glo.tp.challenge.weatherservice.services.WeatherService;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(WeatherController.class)
@@ -31,7 +32,7 @@ public class WeatherControllerTest {
     @Test
     public void testGetWeatherByCityNameIsOk() throws Exception{
 
-        when(weatherService.getWeatherByCityName(any(), any())).thenReturn(new ResponseEntity<>(HttpStatus.OK));
+        when(weatherService.getWeatherByCityName(any(), any())).thenReturn(new CityDTO());
 
         mockMvc.perform(get("/weatherservice/weather/city/Kansas")
                 .param("accessToken","SJKLDQWA4SGDFSA")
