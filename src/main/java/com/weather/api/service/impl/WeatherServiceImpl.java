@@ -8,6 +8,7 @@ import com.weather.api.entity.ExecutionEntity;
 import com.weather.api.exception.NotFoundException;
 import com.weather.api.repository.ExecutionsRepository;
 import com.weather.api.service.WeatherService;
+import com.weather.api.util.Constants;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +24,7 @@ public class WeatherServiceImpl implements WeatherService {
     private final ExecutionsRepository executionsRepository;
     private final WeatherDTOToExecutionEntityConverter weatherDTOToExecutionEntityConverter;
     private static final String APP_ID = System.getenv("APP_ID_VALUE");
-    private static final String CITY_NOT_FOUND = "City was not found";
-    private static final String LATITUDE_AND_LONGITUDE_NOT_FOUND = "Latitude and longitude were not found";
+
 
     @Override
     public WeatherResponse getWeatherByCityName(String cityName) {
@@ -33,7 +33,7 @@ public class WeatherServiceImpl implements WeatherService {
                 executionsRepository.save(weatherDTOToExecutionEntityConverter.convert(weatherResponse));
                 return weatherResponse;
             } catch (FeignException feignException) {
-                log.error("{}, http-response: {}", CITY_NOT_FOUND, feignException.status());
+                log.error("{}, http-response: {}", Constants.CITY_NOT_FOUND, feignException.status());
                 executionsRepository.save(GenericBuilder.of(ExecutionEntity::new)
                         .map(ExecutionEntity::setDatetime, LocalDateTime::now)
                         .map(ExecutionEntity::setResponseCode, feignException::status)
@@ -41,7 +41,7 @@ public class WeatherServiceImpl implements WeatherService {
                         .map(ExecutionEntity::setCityName, () -> cityName)
                         .build()
                 );
-                throw new NotFoundException(CITY_NOT_FOUND, null);
+                throw new NotFoundException(Constants.CITY_NOT_FOUND, null);
             }
     }
 
@@ -52,7 +52,7 @@ public class WeatherServiceImpl implements WeatherService {
             executionsRepository.save(weatherDTOToExecutionEntityConverter.convert(weatherResponse));
             return weatherResponse;
         }catch (FeignException feignException) {
-            log.error("{}, http-response: {}", LATITUDE_AND_LONGITUDE_NOT_FOUND, feignException.status());
+            log.error("{}, http-response: {}", Constants.LATITUDE_AND_LONGITUDE_NOT_FOUND, feignException.status());
             executionsRepository.save(GenericBuilder.of(ExecutionEntity::new)
                     .map(ExecutionEntity::setDatetime, LocalDateTime::now)
                     .map(ExecutionEntity::setResponseCode, feignException::status)
@@ -60,7 +60,7 @@ public class WeatherServiceImpl implements WeatherService {
                     .build()
             );
 
-            throw new NotFoundException(LATITUDE_AND_LONGITUDE_NOT_FOUND, null);
+            throw new NotFoundException(Constants.LATITUDE_AND_LONGITUDE_NOT_FOUND, null);
         }
     }
 }
