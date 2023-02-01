@@ -1,7 +1,9 @@
 package com.weather.api.controller;
 
 import com.weather.api.client.response.WeatherResponse;
+import com.weather.api.entity.ExecutionEntity;
 import com.weather.api.record.ResponseRecord;
+import com.weather.api.record.WeatherAndDBDataRecord;
 import com.weather.api.service.WeatherService;
 import com.weather.api.util.Constants;
 import com.weather.api.util.ResponseMessage;
@@ -45,7 +47,7 @@ public class OpenWeatherController {
             @ApiResponse(responseCode = "200", description = CITY_OK),
             @ApiResponse(responseCode = "404", description = Constants.CITY_NOT_FOUND)})
     @GetMapping(value = "/city/{cityName}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseRecord<WeatherResponse>> getWeatherByCityName(
+    public ResponseEntity<ResponseRecord<WeatherAndDBDataRecord<WeatherResponse, ExecutionEntity>>> getWeatherByCityName(
             @PathVariable
             @Parameter(name = "cityName", description = "City name", schema = @Schema(type = "string"), required = true, in = ParameterIn.PATH, example = "Mexico city")
             @Valid @NotBlank String cityName) {
@@ -60,7 +62,7 @@ public class OpenWeatherController {
             @ApiResponse(responseCode = "200", description = LATITUDE_AND_LONGITUDE_OK),
             @ApiResponse(responseCode = "404", description = Constants.LATITUDE_AND_LONGITUDE_NOT_FOUND)})
     @GetMapping(value = "/latitude/{latitude}/longitude/{longitude}")
-    public ResponseEntity<ResponseRecord<WeatherResponse>> getWeatherByLatitudeAndLongitude(
+    public ResponseEntity<ResponseRecord<WeatherAndDBDataRecord<WeatherResponse, ExecutionEntity>>> getWeatherByLatitudeAndLongitude(
             @PathVariable
             @Parameter(name = "latitude", description = "Latitude", schema = @Schema(type = "number"), required = true, in = ParameterIn.PATH, example = "19.4285")
             @Valid @DecimalMin("-90.0") @DecimalMax("90.0") @Digits(integer = 2, fraction = 6) Double latitude,

@@ -6,6 +6,7 @@ import com.weather.api.converter.GenericBuilder;
 import com.weather.api.converter.WeatherDTOToExecutionEntityConverter;
 import com.weather.api.entity.ExecutionEntity;
 import com.weather.api.exception.NotFoundException;
+import com.weather.api.record.WeatherAndDBDataRecord;
 import com.weather.api.repository.ExecutionsRepository;
 import com.weather.api.service.WeatherService;
 import com.weather.api.util.Constants;
@@ -27,31 +28,29 @@ public class WeatherServiceImpl implements WeatherService {
 
 
     @Override
-    public WeatherResponse getWeatherByCityName(String cityName) {
-            try {
-                WeatherResponse weatherResponse = openWeatherApiClient.getWeatherByCityName(cityName, APP_ID);
-                executionsRepository.save(weatherDTOToExecutionEntityConverter.convert(weatherResponse));
-                return weatherResponse;
-            } catch (FeignException feignException) {
-                log.error("{}, http-response: {}", Constants.CITY_NOT_FOUND, feignException.status());
-                executionsRepository.save(GenericBuilder.of(ExecutionEntity::new)
-                        .map(ExecutionEntity::setDatetime, LocalDateTime::now)
-                        .map(ExecutionEntity::setResponseCode, feignException::status)
-                        .map(ExecutionEntity::setRootCause, feignException::contentUTF8)
-                        .map(ExecutionEntity::setCityName, () -> cityName)
-                        .build()
-                );
-                throw new NotFoundException(Constants.CITY_NOT_FOUND, null);
-            }
+    public WeatherAndDBDataRecord<WeatherResponse, ExecutionEntity> getWeatherByCityName(String cityName) {
+        try {
+            WeatherResponse weatherResponse = openWeatherApiClient.getWeatherByCityName(cityName, APP_ID);
+            return new WeatherAndDBDataRecord<>(executionsRepository.save(weatherDTOToExecutionEntityConverter.convert(weatherResponse)), weatherResponse);
+        } catch (FeignException feignException) {
+            log.error("{}, http-response: {}", Constants.CITY_NOT_FOUND, feignException.status());
+            executionsRepository.save(GenericBuilder.of(ExecutionEntity::new)
+                    .map(ExecutionEntity::setDatetime, LocalDateTime::now)
+                    .map(ExecutionEntity::setResponseCode, feignException::status)
+                    .map(ExecutionEntity::setRootCause, feignException::contentUTF8)
+                    .map(ExecutionEntity::setCityName, () -> cityName)
+                    .build()
+            );
+            throw new NotFoundException(Constants.CITY_NOT_FOUND, null);
+        }
     }
 
     @Override
-    public WeatherResponse getWeatherByLatitudeAndLongitude(Double latitude, Double longitude) {
+    public WeatherAndDBDataRecord<WeatherResponse, ExecutionEntity> getWeatherByLatitudeAndLongitude(Double latitude, Double longitude) {
         try {
             WeatherResponse weatherResponse = openWeatherApiClient.getWeatherByLatitudeAndLongitude(latitude, longitude, APP_ID);
-            executionsRepository.save(weatherDTOToExecutionEntityConverter.convert(weatherResponse));
-            return weatherResponse;
-        }catch (FeignException feignException) {
+            return new WeatherAndDBDataRecord<>(executionsRepository.save(weatherDTOToExecutionEntityConverter.convert(weatherResponse)), weatherResponse);
+        } catch (FeignException feignException) {
             log.error("{}, http-response: {}", Constants.LATITUDE_AND_LONGITUDE_NOT_FOUND, feignException.status());
             executionsRepository.save(GenericBuilder.of(ExecutionEntity::new)
                     .map(ExecutionEntity::setDatetime, LocalDateTime::now)
