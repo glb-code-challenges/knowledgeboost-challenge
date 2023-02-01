@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.glo.tp.challenge.weatherservice.dto.CityDTO;
 
-@FeignClient(name = "weather", url="https://api.openweathermap.org/data/2.5/weather")
+@FeignClient(name = "weather", url="${open.weather.url}")
 public interface WeatherClient {
 	
 	@GetMapping
