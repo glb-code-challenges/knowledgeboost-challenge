@@ -19,4 +19,12 @@ public interface WeatherService {
      * @return Details of the weather of the specified location by its latitude and longitude
      */
     WeatherResponseDto latitudeLongitudeWeatherRequest (Float latitude, Float longitude);
+
+    /**
+     * This method will persist the operation on database
+     * @param cityName The name of the city of the operation that will persist
+     * @param responseCode The response code of the operation to persist
+     * @param rootCause The root cause in case you get an error code
+     */
+    void saveWeatherOperation(String cityName, String responseCode, String rootCause);
 }
