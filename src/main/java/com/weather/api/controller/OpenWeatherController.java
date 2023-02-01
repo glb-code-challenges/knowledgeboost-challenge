@@ -1,6 +1,6 @@
 package com.weather.api.controller;
 
-import com.weather.api.RequestCityName;
+import com.weather.api.request.RequestCityName;
 import com.weather.api.client.response.Coord;
 import com.weather.api.client.response.WeatherResponse;
 import com.weather.api.record.ResponseRecord;
