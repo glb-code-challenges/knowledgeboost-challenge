@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codechallenge.openweather.models.WeatherBase;
 import com.codechallenge.openweather.models.entity.WeatherData;
 import com.codechallenge.openweather.services.IOpenWeatherService;
-import com.codechallenge.openweather.services.OpenWeatherService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @RestController
