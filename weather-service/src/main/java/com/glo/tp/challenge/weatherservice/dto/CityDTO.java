@@ -2,15 +2,11 @@ package com.glo.tp.challenge.weatherservice.dto;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class CityDTO {
 	
 	private long id;
@@ -27,8 +23,4 @@ public class CityDTO {
 	private WindDTO wind;
 	private CloudsDTO clouds;
 	private SysDTO sys;
-	
-	
-	
-
 }

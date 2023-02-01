@@ -1,0 +1,46 @@
+{
+  "id": 4273857,
+  "name": "Kansas",
+  "cod": 200,
+  "base": "stations",
+  "visibility": 10000,
+  "dt": 1675267108,
+  "coord": {
+    "lon": -98.5006,
+    "lat": 38.5003
+  },
+  "weather": [
+    {
+      "id": 801,
+      "main": "Clouds",
+      "description": "few clouds",
+      "icon": "02d"
+    }
+  ],
+  "main": {
+    "temp": 266.44,
+    "pressure": 1028,
+    "humidity": 28,
+    "feels_like": 260.14,
+    "temp_min": 261.3,
+    "temp_max": 268.29,
+    "sea_level": 1028,
+    "grnd_level": 961
+  },
+  "wind": {
+    "speed": 4.6,
+    "deg": 209,
+    "gust": 6.41
+  },
+  "clouds": {
+    "all": "23"
+  },
+  "sys": {
+    "type": 2,
+    "id": 2008008,
+    "country": "US",
+    "sunrise": 1675258778,
+    "sunset": 1675295724
+  },
+  "timezone": -21600
+}

@@ -15,7 +15,7 @@ public class GlobalEsceptionHandler {
 	
 	@ExceptionHandler(InvalidAccessException.class)
 	public ResponseEntity<String> handleInvalidAccessException(InvalidAccessException ex){
-		log.error("Exception Caught in handleCityInfoNotFoundException : {} ", ex.getMessage(), ex);
+		log.error("Exception Caught in handleInvalidAccessException : {} ", ex.getMessage(), ex);
 		 return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
 	}
 	
@@ -27,7 +27,7 @@ public class GlobalEsceptionHandler {
 	
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<String> handleRuntimeException(RuntimeException ex){
-		log.error("Exception Caught in handleCityInfoNotFoundException : {} ", ex.getMessage(), ex);
+		log.error("Exception Caught in handleRuntimeException : {} ", ex.getMessage(), ex);
 		 return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
 	}
 }

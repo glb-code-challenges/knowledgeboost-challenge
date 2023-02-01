@@ -1,9 +1,7 @@
 package com.glo.tp.challenge.weatherservice.utils;
 
 import java.time.LocalDate;
-import org.springframework.http.ResponseEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.glo.tp.challenge.weatherservice.domain.WeatherHistory;
 import com.glo.tp.challenge.weatherservice.dto.CityDTO;
@@ -15,25 +13,41 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class WeatherUtils {
+
+	private static final String NO_ASSIGNED_CITY_NAME = "N/A";
 	
 	public static WeatherHistory buildWeatherCityInformation(FeignResponseExceptionDTO feignExceptionDetail, String cityName) {
 		return WeatherHistory.builder()
+				.consultedBy("City Name")
 				.code(feignExceptionDetail.getCod())
 				.cityName(cityName)
 				.message(feignExceptionDetail.getMessage())
 				.operationDate(LocalDate.now())					
 				.build();		
 	}
-	
-	public static WeatherHistory buildWeatherCityInformation(ResponseEntity<CityDTO> response) throws JsonProcessingException {
-		
-		CityDTO responseDetail = response.getBody();
-		
+
+	public static WeatherHistory buildWeatherCityInformation(FeignResponseExceptionDTO feignExceptionDetail, float latitude, float longitude) {
 		return WeatherHistory.builder()
-				.cityName(responseDetail.getName())
-				.code(responseDetail.getCod())
+				.consultedBy("Latitude and Longitude")
+				.code(feignExceptionDetail.getCod())
+				.cityName(NO_ASSIGNED_CITY_NAME)
+				.longitude(longitude)
+				.latitude(latitude)
+				.message(feignExceptionDetail.getMessage())
 				.operationDate(LocalDate.now())
-				.message(WeatherUtils.convertResponseToJson(responseDetail))
+				.build();
+	}
+	
+	public static WeatherHistory buildWeatherCityInformation(CityDTO response, String field) throws JsonProcessingException {
+
+		return WeatherHistory.builder()
+				.consultedBy(field)
+				.cityName(response.getName())
+				.latitude(response.getCoord().getLat())
+				.longitude(response.getCoord().getLon())
+				.code(response.getCod())
+				.operationDate(LocalDate.now())
+				.message(WeatherUtils.convertResponseToJson(response))
 				.build();
 	}
 	
@@ -41,7 +55,7 @@ public class WeatherUtils {
 		return new ObjectMapper().writer().withDefaultPrettyPrinter().writeValueAsString(responseDetail);
 	}
 	
-	public static FeignResponseExceptionDTO buildFeignResponseExceptionDTO(FeignException feignException) throws JsonMappingException, JsonProcessingException {
+	public static FeignResponseExceptionDTO buildFeignResponseExceptionDTO(FeignException feignException) throws JsonProcessingException {
 		return new ObjectMapper().readValue(feignException.contentUTF8(), FeignResponseExceptionDTO.class);
 	}
 	

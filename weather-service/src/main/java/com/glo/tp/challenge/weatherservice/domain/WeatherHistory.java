@@ -8,20 +8,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "weather_history")
-@Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class WeatherHistory {
 	
 	@Id
 	@GeneratedValue(generator = "WEATHER_HISTORY_SEQUENCE")
 	@Column(name = "id")
 	private Long id;
-	
+
+	@Column(name = "consulted_by")
+	private String consultedBy;
+
 	@Column(name = "city_name")
 	private String cityName;
 	
@@ -34,4 +37,9 @@ public class WeatherHistory {
 	@Column(name = "message")
 	private String message;
 
+	@Column(name = "latitude")
+	private float latitude;
+
+	@Column(name = "longitude")
+	private float longitude;
 }

@@ -1,21 +1,14 @@
 package com.glo.tp.challenge.weatherservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
-@Setter
 @AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class WeatherDTO {
 	
 	private long id;
 	private String main;
 	private String description;
 	private String icon;
-	
-	
-
 }

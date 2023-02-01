@@ -13,6 +13,7 @@ import com.glo.tp.challenge.weatherservice.utils.WeatherUtils;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,14 +26,18 @@ public class WeatherServiceImpl implements WeatherService {
 	
 
 	@Override
-	public CityDTO getWeatherByCityName(String cityName, String appid) throws JsonProcessingException {
-		log.info("getWeatherByCityName {} {}", cityName, appid);
-		
-		ResponseEntity<CityDTO> response = null;
+	public CityDTO getWeatherByCityName(String cityName, String appId) throws JsonProcessingException {
+		log.info("getWeatherByCityName {} {}", cityName, appId);
+
+		CityDTO response = CityDTO.builder().build();
 		
 		try {
-			response = weatherClient.getWeatherByCityNameFromApi(cityName, appid);
-			WeatherHistory mappedEntity = WeatherUtils.buildWeatherCityInformation(response);
+			response = Optional.ofNullable(weatherClient.getWeatherByCityNameFromApi(cityName, appId))
+					.filter(re -> re.getStatusCodeValue() == 200)
+					.map(ResponseEntity::getBody)
+					.orElseThrow(RuntimeException::new);
+
+			WeatherHistory mappedEntity = WeatherUtils.buildWeatherCityInformation(response, "City Name");
 			saveBuiltEntity(mappedEntity);
 		}
 		catch(FeignException feignException) {
@@ -43,18 +48,34 @@ public class WeatherServiceImpl implements WeatherService {
 			WeatherUtils.verifyAndThrowException(feignExceptionDetail);				
 		}
 		
-		return response.getBody();
-	}
-
-	private void saveBuiltEntity(WeatherHistory mappedEntity) {
-		//TODO: Validate JPA for possible exceptions
-		weatherRepository.save(mappedEntity);
+		return response;
 	}
 
 	@Override
-	public ResponseEntity<CityDTO> getWeatherByLatitudeAndLongitude(String latitude, String longitude, String appid) {
-		log.info("getWeatherByLatitudeAndLongitude {} {} {}", latitude, longitude, appid);
-		//TODO: Validate all the endpoint flow like the other one.
-		return weatherClient.getWeatherByLatitudeAndLongitude(latitude, longitude, appid);
+	public CityDTO getWeatherByLatitudeAndLongitude(float latitude, float longitude, String appId) throws  JsonProcessingException{
+		log.info("getWeatherByLatitudeAndLongitude {} {} {}", latitude, longitude, appId);
+
+		CityDTO response = CityDTO.builder().build();
+
+		try{
+			response = Optional.ofNullable(weatherClient.getWeatherByLatitudeAndLongitude(latitude, longitude, appId))
+					.filter(re -> re.getStatusCodeValue() == 200)
+					.map(ResponseEntity::getBody)
+					.orElseThrow(RuntimeException::new);
+
+			WeatherHistory mappedEntity = WeatherUtils.buildWeatherCityInformation(response, "Latitude and Longitude");
+			saveBuiltEntity(mappedEntity);
+		}
+		catch(FeignException feignException){
+			FeignResponseExceptionDTO feignExceptionDetail = WeatherUtils.buildFeignResponseExceptionDTO(feignException);
+			WeatherHistory mappedEntity = WeatherUtils.buildWeatherCityInformation(feignExceptionDetail, latitude, longitude);
+			saveBuiltEntity(mappedEntity);
+			WeatherUtils.verifyAndThrowException(feignExceptionDetail);
+		}
+		return response;
+	}
+
+	private void saveBuiltEntity(WeatherHistory mappedEntity) {
+		weatherRepository.save(mappedEntity);
 	}
 }
