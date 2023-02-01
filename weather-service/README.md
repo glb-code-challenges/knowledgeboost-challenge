@@ -29,6 +29,7 @@ The webservice reads on the database. The related tables are:
 | 1.0.1    | 2022-01-31    | Added:Functionality for weatherservice/weather/city/{cityName} endpoint.|
 | 1.0.2    | 2022-02-01    | Added:Functionality for weatherservice/weather/latitude/{latitude}/longitude/{longitude} endpoint.|
 | 1.0.3    | 2022-02-01    | Added:Testing and validations.|
+| 1.0.4    | 2022-02-01    | Added:API definition.|
 
 
 ### About Microservice
@@ -58,3 +59,16 @@ The webservice reads on the database. The related tables are:
 		- lombok
 		- swagger
 		- postgresql
+		
+	
+	References:
+		https://openjdk.org/projects/jdk8/
+		https://maven.apache.org/guides/
+		https://start.spring.io/
+		https://projectlombok.org/features/
+		https://spring.io/projects/spring-cloud-openfeign
+		https://devops.datenkollektiv.de/banner.txt/index.html
+		https://www.postgresql.org/docs/
+		https://swagger.io/docs/
+		https://www.baeldung.com/swagger-apioperation-vs-apiresponse
+		
