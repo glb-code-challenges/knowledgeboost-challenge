@@ -1,7 +1,5 @@
 package com.weatherapi.service;
 
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +38,21 @@ public class WeatherService {
 		String url = byCoordinatesBaseUrl.replace("{lon}", lon).replace("{lat}", lat);
 		
 		 CoordinatesWeather coordinatesWeather = restTemplate.getForObject(url, CoordinatesWeather.class);
+		 weatherRepository.save(mapDtoToCoordinatesEntity(coordinatesWeather));
 		 
 
 		return coordinatesWeather;
 	}
 	
 	private WeatherEntity mapDtoToEntity(CityWeatherDto weatherDto) {
+		 WeatherEntity entity = new WeatherEntity();
+		 entity.setCityName(weatherDto.getCityName());
+		 entity.setResponseCode(weatherDto.getResponseCode());
+		 entity.setCreatedOn(LocalDateTime.now());
+		 return entity;
+	}
+	
+	private WeatherEntity mapDtoToCoordinatesEntity(CoordinatesWeather weatherDto) {
 		 WeatherEntity entity = new WeatherEntity();
 		 entity.setCityName(weatherDto.getCityName());
 		 entity.setResponseCode(weatherDto.getResponseCode());

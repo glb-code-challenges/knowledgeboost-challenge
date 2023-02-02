@@ -15,10 +15,15 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CoordinatesWeather {
 	
-	private String name;
+	
+	@JsonProperty(value = "name")
+	private String cityName;
 	
 	@JsonProperty(value = "coord")
 	private CoordinatesWeatherDto coordinatesWeather;
+	
+	@JsonProperty(value = "cod")
+	private Long responseCode;
 	
 	
 
