@@ -1,0 +1,66 @@
+{
+	"info": {
+		"_postman_id": "5c903238-807f-40ec-9b9b-92275b11ce8e",
+		"name": "TalentPool_Weather",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9868241"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/weather/latitude/19.00/longitude/-99",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "7f89ff1a6e6ec050bd4e12b71ca805ea",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/weather/latitude/19.00/longitude/-99",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"weather",
+						"latitude",
+						"19.00",
+						"longitude",
+						"-99"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/weather/city/Pachuca",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "7f89ff1a6e6ec050bd4e12b71ca805ea",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/weather/city/Pachuca",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"weather",
+						"city",
+						"Pachuca"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
