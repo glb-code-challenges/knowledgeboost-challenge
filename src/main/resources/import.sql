@@ -1,0 +1,2 @@
+INSERT INTO USER_INFO (name, password, email, roles) VALUES ('gerardo.coronilla','$2a$10$ykhXmCAam5FUEF9GN.4Z8OwwWJidvMii6VFYe77cmS2X6oF6p4W86','gerardo.coronilla@globant.com', 'ADMIN');
+INSERT INTO USER_INFO (name, password, email, roles) VALUES ('usuario.prueba','$2a$10$qGyDfZLBB.SgLv7GCP3uZe3oM38fVtr58T1iZ1LNOvO61loNUAAaK','usuario.prueba@globant.com', 'USER');
