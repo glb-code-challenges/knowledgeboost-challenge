@@ -11,10 +11,10 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 @ExtendWith(MockitoExtension.class)
-class PublishServiceTest {
+class PublishServiceRabbitTest {
 
   @InjectMocks
-  PublishService publishService;
+  PublishServiceRabbit publishServiceRabbit;
 
   @Mock
   RabbitTemplate rabbitTemplate;
@@ -28,6 +28,6 @@ class PublishServiceTest {
 
   @Test
   void sentMessagePersist() {
-    publishService.sentMessagePersist(Request.builder().build());
+    publishServiceRabbit.sentMessagePersist(Request.builder().build());
   }
 }

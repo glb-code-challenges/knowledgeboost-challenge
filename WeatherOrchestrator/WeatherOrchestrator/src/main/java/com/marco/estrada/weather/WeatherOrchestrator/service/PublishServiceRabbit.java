@@ -7,12 +7,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+
+@Profile("local")
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class PublishService {
+public class PublishServiceRabbit implements PublishInterface{
 
     private final RabbitTemplate rabbitTemplate;
 

@@ -7,8 +7,10 @@ import com.marco.estrada.weather.WeatherPersistance.service.StoreDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+@Profile("local")
 @RabbitListener(queues = "weather")
 @Component
 @RequiredArgsConstructor

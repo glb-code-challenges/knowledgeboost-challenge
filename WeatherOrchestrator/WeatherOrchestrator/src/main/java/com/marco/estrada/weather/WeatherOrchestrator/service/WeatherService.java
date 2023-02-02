@@ -25,7 +25,7 @@ public class WeatherService {
 
     private final WeatherClient client;
 
-    private final PublishService publishService;
+    private final PublishInterface publishServiceRabbit;
 
     public WeatherResp getCityWeather(String cityName){
         log.debug("Executing client");
@@ -33,7 +33,7 @@ public class WeatherService {
             () -> client.getWeather(
                 apiKey, 0, 0, cityName),
             cityName);
-        publishService.sentMessagePersist(
+        publishServiceRabbit.sentMessagePersist(
             Request.builder()
                 .statusCode(200)
                 .date(new Date())
@@ -49,7 +49,7 @@ public class WeatherService {
                 apiKey,
                 position.getLongitude(),
                 position.getLatitude(), ""), "");
-        publishService.sentMessagePersist(
+        publishServiceRabbit.sentMessagePersist(
             Request.builder()
                 .statusCode(200)
                 .date(new Date())

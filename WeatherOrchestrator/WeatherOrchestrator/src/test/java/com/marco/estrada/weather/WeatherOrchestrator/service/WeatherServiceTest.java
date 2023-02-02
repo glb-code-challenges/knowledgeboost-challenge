@@ -34,7 +34,7 @@ class WeatherServiceTest {
     WeatherClient client;
 
     @Mock
-    PublishService publishService;
+    PublishServiceRabbit publishServiceRabbit;
 
     @BeforeEach
     void setUp() {
