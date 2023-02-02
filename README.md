@@ -1,4 +1,4 @@
-# ImageProccessingProjectPod8
+# Globant MX Knowledge Boost Challenge Code
 
 ## Description
 This project was developed as part of Challenge Code from Globant MX Knowledge Boost meetings. It consists of an API that queries an OpenWeather end-point to find out the weather status according the following criteria:
