@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  weather-service:
+    container_name: weather-service
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - challenge
+    restart: always
+
+networks:
+  challenge:
+    name: challenge
+
+
+
