@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.weatherapi.model.dto.CityWeather;
+import com.weatherapi.model.dto.CityWeatherDto;
 import com.weatherapi.model.dto.CoordinatesWeather;
 import com.weatherapi.service.WeatherService;
 
@@ -20,7 +20,7 @@ public class WeatherController {
 	private WeatherService weatherService;
 
 	@GetMapping(value = "{cityName}")
-	public ResponseEntity<CityWeather> getCityWeather(@PathVariable String cityName) {
+	public ResponseEntity<CityWeatherDto> getCityWeather(@PathVariable String cityName) {
 		
 		return new ResponseEntity<>(weatherService.getCityWeather(cityName), HttpStatus.OK);
 	}
