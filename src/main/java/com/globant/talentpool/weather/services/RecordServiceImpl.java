@@ -24,6 +24,16 @@ public class RecordServiceImpl implements RecordService{
     @Autowired
     private RecordRepository recordRepository;
 
+    WeatherApiService weatherApiService;
+
+    public RecordServiceImpl() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(AppConstants.URL_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        weatherApiService = retrofit.create(WeatherApiService.class);
+    }
+
     @Override
     public ResponseEntity<ResponseDTO> saveByCity(String cityName) {
         log.info("m=saveByCity ::: Entering saveByCity method. City to evaluate: " + cityName);
@@ -34,13 +44,6 @@ public class RecordServiceImpl implements RecordService{
                             .message("City name is required")
                             .build());
 
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AppConstants.URL_BASE)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        WeatherApiService weatherApiService = retrofit.create(WeatherApiService.class);
 
         try {
             Response<WeatherModel> response = weatherApiService.requestWeatherByCity(cityName).execute();
@@ -88,12 +91,6 @@ public class RecordServiceImpl implements RecordService{
     public ResponseEntity<ResponseDTO> saveByLatLong(Double lat, Double lon) {
         log.info("m=saveByCity ::: Entering saveByCity method. Coords to evaluate: " + lat + ", " + lon);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AppConstants.URL_BASE)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        WeatherApiService weatherApiService = retrofit.create(WeatherApiService.class);
 
         try {
             Response<WeatherModel> response = weatherApiService.requestWeatherByLatLon(lat, lon).execute();

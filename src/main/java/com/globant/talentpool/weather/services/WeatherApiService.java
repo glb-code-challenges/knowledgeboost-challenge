@@ -8,6 +8,8 @@ import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 public interface WeatherApiService {
+
+
     @Headers("x-api-key: " + AppConstants.API_KEY)
     @GET("data/2.5/weather")
     Call<WeatherModel> requestWeatherByCity(@Query("q") String cityName);
