@@ -23,13 +23,14 @@ public class WeatherController {
 
 	@GetMapping("/latitude/{latitude}/longitude/{longitude}")
 	public ResponseEntity<WheaterInfoResponse> getWeatherByCoordinates(@PathVariable("latitude") Double lat,
-			@PathVariable("longitude") Double lon) {
+			@PathVariable("longitude") Double lon) throws Exception {
 		log.info(String.format("requesting weather by Coordinates latitude: %s - longitude: %s", lat, lon));
 		return ResponseEntity.ok(weatherService.getWeatherByCoordinates(lat.toString(), lon.toString()));
 	}
 
 	@GetMapping("/city/{cityName}")
-	public ResponseEntity<WheaterInfoResponse> getWeatherByCityName(@PathVariable("cityName") String cityName) {
+	public ResponseEntity<WheaterInfoResponse> getWeatherByCityName(@PathVariable("cityName") String cityName)
+			throws Exception {
 		log.info(String.format("requesting weather by cityName: %s", cityName));
 		return ResponseEntity.ok(weatherService.getWeatherByCityName(cityName));
 	}

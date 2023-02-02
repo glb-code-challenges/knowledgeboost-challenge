@@ -4,8 +4,8 @@ import com.globant.challenge.weather.model.dto.WheaterInfoResponse;
 
 public interface IWeatherService {
 
-	WheaterInfoResponse getWeatherByCoordinates(String lat, String lon);
+	WheaterInfoResponse getWeatherByCoordinates(String lat, String lon) throws Exception;
 
-	WheaterInfoResponse getWeatherByCityName(String cityName);
+	WheaterInfoResponse getWeatherByCityName(String cityName) throws Exception;
 
 }

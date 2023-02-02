@@ -1,8 +1,10 @@
 package com.globant.challenge.weather.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -38,7 +40,7 @@ public class WeatherServiceFeignTest {
 	IWeatherRequestLogDao weatherRequestLogDao;
 
 	@Test
-	void getWeatherByCoordinates() {
+	void getWeatherByCoordinatesTest() throws Exception {
 
 		// given
 		var lat = "19.451054";
@@ -92,7 +94,7 @@ public class WeatherServiceFeignTest {
 	}
 
 	@Test
-	void getWeatherByCityName() {
+	void getWeatherByCityNameTest() throws Exception {
 
 		// given
 		var lat = "19.451054";
@@ -145,4 +147,25 @@ public class WeatherServiceFeignTest {
 		verify(weatherRequestLogDao, times(1)).save(any());
 	}
 
+	@Test
+	void getWeatherByCityNameWhenExceptionTest() throws Exception {
+
+		// given
+		var name = "Name test";
+		var requestLogId = UUID.randomUUID();
+		var weatherRequestLog = WeatherRequestLog.builder().id(requestLogId).cityName(name).createdAt(new Date())
+				.responseCode(200).responseMessage("message test").build();
+
+		// when
+		when(weatherClient.getWeatherByCityName(anyString(), anyString())).thenThrow(new RuntimeException("An error occured while request weather API"));
+		when(weatherRequestLogDao.save(any())).thenReturn(weatherRequestLog);
+		Exception ex = assertThrows(Exception.class, () -> {
+			weatherService.getWeatherByCityName(name);
+		}); 
+
+		// then
+		assertNotNull(ex);
+		verify(weatherClient, times(1)).getWeatherByCityName(anyString(), anyString());
+		verify(weatherRequestLogDao, never()).save(any());
+	}
 }
