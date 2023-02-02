@@ -1,4 +1,4 @@
-CREATE TABLE executions (
+CREATE TABLE IF NOT EXISTS executions (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
   datetime TIMESTAMP,
   response_code INTEGER,
