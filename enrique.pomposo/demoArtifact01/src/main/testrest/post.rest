@@ -1,0 +1,32 @@
+# http-method
+POST
+
+# url
+http://localhost:8080/api/v1/student
+
+
+#http-header
+@Content-Type: application/json
+
+
+#request body
+{
+    "name": "fivename",
+    "email": "eight@q.com",
+    "dob": "2000-01-05",
+    "age": 20
+  }
+
+
+%%%
+
+# Duration: 80 ms
+# URL: http://localhost:8080/api/v1/student
+
+# HTTP/1.1 200
+
+@Content-Length: 0
+@Date: Wed, 01 Feb 2023 22:48:57 GMT
+@Keep-Alive: timeout=60
+@Connection: keep-alive
+
