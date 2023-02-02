@@ -14,6 +14,7 @@ This project calls the Open Weather API and returns the weather by city name or 
 * Swagger
 * H2
 * Open Feign
+* JaCoCo
 
 ## Use
 You must call the service in the port 8091 with two options.
