@@ -1,0 +1,104 @@
+version: '2.1'
+
+services:
+  broker:
+    image: johnnypark/kafka-zookeeper:2.6.0
+    container_name: service-broker-weather
+    restart: always
+    ports:
+      - "2181:2181"
+      - "9092:9092"
+    environment:
+    - ADVERTISED_HOST=127.0.0.1
+    - NUM_PARTITIONS=3
+    networks:
+    - weathernet
+    volumes:
+    - ./server.properties:/opt/kafka_2.13-2.6.0/config/server.properties
+  tracer:
+    image: openzipkin/zipkin:2
+    container_name: service-tracer-weather
+    restart: always
+    ports:
+      - "19411:9411"
+    networks:
+    - weathernet 
+  metrics:
+    image: prom/prometheus:v2.31.1
+    container_name: service-metrics-weather
+    restart: always
+    ports:
+    - 19090:9090
+    networks:
+    - weathernet
+    volumes:
+    - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  analytics:
+    image: grafana/grafana:8.2.3
+    container_name: service-analytics-weather
+    restart: always
+    ports:
+    - 13000:3000
+    networks:
+    - weathernet
+    depends_on:
+    - metrics
+  mysql:
+    image: mysql:8.0.26
+    container_name: database-mysql-weather
+    restart: always
+    environment:
+    - MYSQL_ROOT_PASSWORD=123456
+    ports:
+    - 13306:3306
+    - 33060:33060
+    volumes:
+    - ./mysql/:/docker-entrypoint-initdb.d/:ro
+    networks:
+    - weathernet
+  mongo:
+    image: mongo:5.0.2
+    container_name: database-mongo-weather
+    restart: always
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=weather
+    - MONGO_INITDB_ROOT_PASSWORD=W34th3rApp#!
+    ports:
+    - 27017:27017
+    networks:
+    - weathernet 
+  apiweatherconfig:
+    image: apiweatherconfig
+    container_name: service-apiweatherconfig
+    restart: always
+    ports:
+    - 83:83
+    networks:
+    - weathernet    
+  apiweathergateway:
+    image: apiweathergateway
+    container_name: service-apiweathergateway
+    restart: always
+    ports:
+    - 5000:5000
+    networks:
+    - weathernet    
+  apiweathersecurity:
+    image: apiweathersecurity
+    container_name: service-apiweathersecurity
+    restart: always
+    ports:
+    - 81:81
+    networks:
+    - weathernet    
+  apiweatherservice:
+    image: apiweatherservice
+    container_name: service-apiweatherservice
+    restart: always
+    ports:
+    - 82:82
+    networks:
+    - weathernet    
+networks:
+  weathernet:
+    name: weathernet-ms
