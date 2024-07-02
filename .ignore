@@ -1,0 +1,12 @@
+# Ignora archivos del sistema Mac 
+.DS_store
+
+.settings
+
+bin
+
+.project
+
+.classpath
+
+target
