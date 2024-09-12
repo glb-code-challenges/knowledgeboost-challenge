@@ -1,0 +1,22 @@
+
+spring:
+  profiles:
+    active: aws
+  rabbitmq:
+    host: 192.168.0.7
+  datasource:
+    url: jdbc:postgresql://${RDS_HOSTNAME:localhost}:${RDS_PORT:5432}/${RDS_DB_NAME:Weather}
+    username: ${RDS_USERNAME:postgres}
+    password: ${RDS_PASSWORD:colonel}
+    initialize: true
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        show-sql: true
+        ddl-auto: none
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+
+server:
+  port: 5000

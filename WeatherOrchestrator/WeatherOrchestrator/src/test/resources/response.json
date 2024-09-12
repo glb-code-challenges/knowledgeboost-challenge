@@ -1,0 +1,46 @@
+{
+  "coord": {
+    "lon": 120.7198,
+    "lat": 15.0646
+  },
+  "weather": [
+    {
+      "id": 804,
+      "main": "Clouds",
+      "description": "overcast clouds",
+      "icon": "04n"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 297.99,
+    "feels_like": 298.49,
+    "temp_min": 297.99,
+    "temp_max": 297.99,
+    "pressure": 1014,
+    "humidity": 75,
+    "sea_level": 1014,
+    "grnd_level": 1013
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 2.44,
+    "deg": 48,
+    "gust": 5.67
+  },
+  "clouds": {
+    "all": 85
+  },
+  "dt": 1675178924,
+  "sys": {
+    "type": 1,
+    "id": 8152,
+    "country": "PH",
+    "sunrise": 1675117578,
+    "sunset": 1675158867
+  },
+  "timezone": 28800,
+  "id": 1699805,
+  "name": "Mexico",
+  "cod": 200
+}

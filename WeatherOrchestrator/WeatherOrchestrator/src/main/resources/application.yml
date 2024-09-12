@@ -1,0 +1,25 @@
+spring:
+  rabbitmq:
+    host: 192.168.0.7
+
+client:
+  key: 643ec1b37666304870c6333f31470ad8
+
+
+logging:
+  level:
+    com.marco.estrada.*: DEBUG
+
+server:
+  port: 8081
+
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+
+
