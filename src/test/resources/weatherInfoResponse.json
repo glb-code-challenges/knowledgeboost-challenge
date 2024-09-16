@@ -1,0 +1,18 @@
+{
+  "longitude": -99.0609,
+  "latitude": 19.3584,
+  "weather": [
+    "Clear-clear sky"
+  ],
+  "temp": "15.39 °C",
+  "tempMin": "11.3 °C",
+  "tempMax": "15.69 °C",
+  "pressure": 1028,
+  "humidity": 36,
+  "sunrise": "2023-02-02T13:10:35.000+00:00",
+  "sunset": "2023-02-03T00:29:12.000+00:00",
+  "timestamp": "2023-02-02 07:02 AM UTC",
+  "responseCode": 200,
+  "cityName": "MX-Iztapalapa",
+  "errorCause": null
+}

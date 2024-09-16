@@ -1,0 +1,43 @@
+{
+  "coord": {
+    "lon": -99.0609,
+    "lat": 19.3584
+  },
+  "weather": [
+    {
+      "id": 800,
+      "main": "Clear",
+      "description": "clear sky",
+      "icon": "01n"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 288.41,
+    "feels_like": 286.98,
+    "temp_min": 285.41,
+    "temp_max": 289.33,
+    "pressure": 1028,
+    "humidity": 38
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 0,
+    "deg": 0
+  },
+  "clouds": {
+    "all": 0
+  },
+  "dt": 1675315619,
+  "sys": {
+    "type": 1,
+    "id": 7146,
+    "country": "MX",
+    "sunrise": 1675257053,
+    "sunset": 1675297718
+  },
+  "timezone": -21600,
+  "id": 3526683,
+  "name": "Iztapalapa",
+  "cod": 200
+}
