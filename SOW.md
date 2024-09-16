@@ -23,7 +23,7 @@ weather/latitude/{latitude}/longitude/{longitude}
 The response from the calls to the endpoints must be stored in a relational database where you save:
 Timestamp of the operation.
 Response code.
-If the response is an error, save the root cause.
+If the response is an error, save the openWeather cause.
 City name.
 
 
