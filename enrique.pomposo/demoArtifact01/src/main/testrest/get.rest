@@ -1,0 +1,35 @@
+# http-method
+GET
+
+# url
+http://localhost:8080/api/v1/student
+
+%%%
+
+# Duration: 256 ms
+# URL: http://localhost:8080/api/v1/student
+
+# HTTP/1.1 200
+
+@Content-Type: application/json
+@Transfer-Encoding: chunked
+@Date: Wed, 01 Feb 2023 22:48:52 GMT
+@Keep-Alive: timeout=60
+@Connection: keep-alive
+
+[
+  {
+    "id": 1,
+    "name": "mariam",
+    "email": "mariam@q.com",
+    "dob": "2000-01-05",
+    "age": 20
+  },
+  {
+    "id": 2,
+    "name": "alex",
+    "email": "alex@q.com",
+    "dob": "2000-01-05",
+    "age": 20
+  }
+]
