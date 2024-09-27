@@ -1,0 +1,12 @@
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\controller\WeatherController.java
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\WeatherApiApplication.java
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\model\dto\DetailedWeatherDto.java
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\model\dto\CoordinatesWeatherDto.java
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\model\dto\GeneralWeatherDto.java
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\model\entity\Entity.java
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\repository\WeatherRepository.java
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\model\dto\CityWeatherDto.java
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\model\entity\WeatherEntity.java
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\service\WeatherService.java
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\model\dto\CoordinatesWeather.java
+C:\Users\diana.campos\Downloads\knowledgeboost-challenge\src\main\java\com\weatherapi\configuration\RestTemplateConfig.java
