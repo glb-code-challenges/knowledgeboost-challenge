@@ -1,0 +1,46 @@
+server:
+  port: 5000
+ 
+jwt:
+  secret: Key#SuperSecret$APIWeather#20230131
+ 
+spring:
+  application:
+    name: apiweathergateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+              allowedOrigins: "*"
+              allowedMethods: "*"
+              allowedHeaders: "*"
+      routes:      
+      - id: apiweathersecurity
+        uri: http://apiweathersecurity:81/weather/auth
+        predicates:
+          - Path=/api/weather/auth
+        filters:
+          - StripPrefix=1
+      - id: apiweatherservicelatlon
+        uri: http://apiweatherservice:82/weather/{lat}/{lon}
+        predicates:
+          - Path=/api/weather/{lat}/{lon}
+        filters:
+          - StripPrefix=1
+          - JwtAuthenticationFilter                
+      - id: apiweatherservicecityname
+        uri: http://apiweatherservice:82/weather/{cityName}
+        predicates:
+          - Path=/api/weather/{cityName}
+        filters:
+          - StripPrefix=1
+          - JwtAuthenticationFilter
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        
